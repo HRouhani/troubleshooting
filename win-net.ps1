@@ -3,6 +3,9 @@ Start-Transcript -Path $logFile -Append
 
 Write-Host "`n=== Connectivity Diagnostic ===`n"
 
+# bypassing execution policy
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
 # 1. System IP Address
 Write-Host "1. Local IP Addresses:"
 Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike "169.*" } | Format-Table -AutoSize
