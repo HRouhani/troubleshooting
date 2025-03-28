@@ -1,4 +1,12 @@
-$logFile = "$PSScriptRoot\trellix_diagnostics.txt"
+# ============================
+# Diagnostics Script
+# 1. Open PowerShell with admin rights (Right-click > Run as Administrator)
+# 2. This script gathers network connectivity information.
+# 3. All output will be saved to a file named: Diagnostics.txt
+# ============================
+
+
+$logFile = "$PSScriptRoot\Diagnostics.txt"
 Start-Transcript -Path $logFile -Append
 
 Write-Host "`n=== Connectivity Diagnostic ===`n"
