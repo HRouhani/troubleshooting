@@ -25,10 +25,14 @@ Get-NetIPConfiguration | Format-Table InterfaceAlias, IPv4Address, DNSServer, In
 # 3. Proxy settings
 Write-Host "`n3. System Proxy Configuration:"
 netsh winhttp show proxy
+# CMD Equivalent:
+# netsh winhttp show proxy
 
 # 4. DNS resolution
 Write-Host "`n4. Resolving DNS for test-hx:"
 Resolve-DnsName test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
+# CMD Equivalent:
+# nslookup test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
 
 # 5. HTTP Connectivity Test (Port 80)
 Write-Host "`n5. HTTP (port 80) Test with Invoke-WebRequest:"
@@ -38,6 +42,8 @@ try {
 } catch {
     Write-Warning "HTTP request failed: $_"
 }
+# CMD Equivalent:
+# curl http://test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
 
 # 6. TCP Connectivity Test - Ports 80 & 443
 Write-Host "`n6. TCP Port Test using Test-NetConnection:"
@@ -47,6 +53,19 @@ foreach ($port in $ports) {
     Write-Host "`nPort ${port}:`n"
     $result | Format-List
 }
+# CMD Equivalent:
+# telnet only tests TCP connectivity, not the TLS handshake (443)
+# telnet test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud 80
+# or: (-k ignore certificate errors)
+# curl -v telnet://test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud:80
+# curl -vk https://test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud:443
+
+# 7. Traceroute to diagnose where the traffic might be blocked
+Write-Host "`n7. Traceroute to detect path issues:"
+tracert test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
+# CMD Equivalent:
+# tracert test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
+
 
 Write-Host "`n=== End of Diagnostics ==="
 Stop-Transcript
