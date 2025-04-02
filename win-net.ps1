@@ -18,9 +18,18 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 Write-Host "1. Local IP Addresses:"
 Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike "169.*" } | Format-Table -AutoSize
 
-# 2. VPN Check
-Write-Host "`n2. Network Interfaces (to infer VPN presence):"
-Get-NetIPConfiguration | Format-Table InterfaceAlias, IPv4Address, DNSServer, InterfaceDescription -AutoSize
+
+# 2. VPN & DNS Info
+Write-Host "`n2. Network Interfaces and DNS Servers:"
+Get-NetIPConfiguration | Format-Table InterfaceAlias, IPv4Address, InterfaceDescription -AutoSize
+
+Write-Host "`n2b. DNS Servers per Interface:"
+$dnsInfo = Get-DnsClientServerAddress -AddressFamily IPv4 | Where-Object { $_.ServerAddresses.Count -gt 0 }
+foreach ($entry in $dnsInfo) {
+    Write-Host "`nInterfaceAlias: $($entry.InterfaceAlias)"
+    Write-Host "DNS Servers:"
+    $entry.ServerAddresses | ForEach-Object { Write-Host "  $_" }
+}
 
 # 3. Proxy settings
 Write-Host "`n3. System Proxy Configuration:"
