@@ -53,7 +53,8 @@ try {
     Write-Warning "HTTP request failed: $_"
 }
 # CMD Equivalent:
-# curl http://test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
+# curl -v http://test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
+# important:  curl on windows uses System default proxy (WinINET/WinHTTP), but this is not the case in Linux/Mac and we need to define it using env variables (http_proxy/https_proxy)
 
 # 6. TCP Connectivity Test - Ports 80 & 443
 Write-Host "`n6. TCP Port Test using Test-NetConnection:"
