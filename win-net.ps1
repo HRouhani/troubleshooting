@@ -40,6 +40,7 @@ netsh winhttp show proxy
 # 4. DNS resolution
 Write-Host "`n4. Resolving DNS for test-hx:"
 Resolve-DnsName test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
+nslookup test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
 # CMD Equivalent:
 # nslookup test-hx.cdcfireeyehxusdev.aws.platform.porsche-preview.cloud
 
